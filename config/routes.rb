@@ -3,6 +3,17 @@ Rails.application.routes.draw do
 
   resources :users
 
+  initializer :add_builtin_route do |app|
+  if Rails.env.development?
+    app.routes.append do
+      get '/rails/info/properties' => "rails/info#properties"
+      get '/rails/info/routes'     => "rails/info#routes"
+      get '/rails/info'            => "rails/info#index"
+      get '/'                      => "rails/welcome#index"
+    end
+  end
+end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
